@@ -1,6 +1,12 @@
-// fetch post action 
-export const fetchPosts = () => {
-    return {
-        type: 'FETCH_POSTS'
-    };
+import jsonPlaceholder from '../apis/jsonPlaceholder';
+
+// step 4: action creator runs code to make an API request
+export const fetchPosts = () => async dispatch => {
+    // can passactions into the dispatch function 
+    // dispatch allows you to change any data you want 
+    // getState allows you to read or access any data you want 
+    // step 5: api responds with data
+    const response = await jsonPlaceholder.get('/posts');
+    // step 6: action creator returns an 'action' with the fetched data on the 'payload' property
+    dispatch({ type: 'FETCH_POSTS', payload: response }) 
 };

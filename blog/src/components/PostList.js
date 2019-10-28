@@ -4,13 +4,15 @@ import { fetchPosts } from '../actions';
 
 class PostList extends React.Component {
     // componentDidMount is called on load by react 
+    // step 2: components 'componentDidMount' lifecycle method gets called
     componentDidMount() {
         // the instant this component gets loaded on the screen the fetchpost action will be called
+        // step 3: we call action creator from 'componentDidMount'
         this.props.fetchPosts();
     }
 
     render() {
-        // component passed in 
+        // step 1: component gets rendered onto screen
         return <div>Post List</div>;
     }
 }
