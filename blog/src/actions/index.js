@@ -8,5 +8,5 @@ export const fetchPosts = () => async dispatch => {
     // step 5: api responds with data
     const response = await jsonPlaceholder.get('/posts');
     // step 6: action creator returns an 'action' with the fetched data on the 'payload' property
-    dispatch({ type: 'FETCH_POSTS', payload: response }) 
+    dispatch({ type: 'FETCH_POSTS', payload: response.data }) 
 };
