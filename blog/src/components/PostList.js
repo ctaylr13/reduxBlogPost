@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPosts } from '../actions';
+import { fetchPostsAndUsers } from '../actions';
 import UserHeader from './UserHeader';
 
 class PostList extends React.Component {
@@ -9,7 +9,7 @@ class PostList extends React.Component {
     componentDidMount() {
         // the instant this component gets loaded on the screen the fetchpost action will be called
         // step 3: we call action creator from 'componentDidMount'
-        this.props.fetchPosts(); //this is the action
+        this.props.fetchPostsAndUsers(); //this is the action
     }
 
     renderList() {
@@ -45,5 +45,5 @@ const mapStateToProps = (state) => {
 // second argument is the componet that its actually tied to
 export default connect(
     mapStateToProps, 
-    { fetchPosts }
+    { fetchPostsAndUsers }
 )(PostList);

@@ -1,6 +1,17 @@
 import _ from 'lodash';
 import jsonPlaceholder from '../apis/jsonPlaceholder';
 
+export const fetchPostsAndUsers = () => async (dispatch, getState) => {
+    // when we call an action creator from inside of an action creator we need 
+    // to make sure that we dispatch the result of calling the action creator 
+    //step a1: call 'fetchPosts'
+    await dispatch(fetchPosts()); // this will place the posts on the state
+    const userIds = _.uniq(_.map(getState().posts, 'userId'));
+    userIds.forEach(id => dispatch(fetchUser(id)));
+    console.log(userIds);
+
+};
+
 // step 4: action creator runs code to make an API request
 export const fetchPosts = () => async dispatch => {
     // can passactions into the dispatch function 
@@ -12,12 +23,25 @@ export const fetchPosts = () => async dispatch => {
     dispatch({ type: 'FETCH_POSTS', payload: response.data }); 
 };
 
-export const fetchUser = id => dispatch => {
-    _fetchUser(id, dispatch);
+export const fetchUser = id => async dispatch => {
+    const response = await jsonPlaceholder.get(`/users/${id}`);
+    dispatch({ type: 'FETCH_USER', payload: response.data });
 };
 
-const _fetchUser = _.memoize(async (id, dispatch) => {
-    const response = await jsonPlaceholder.get(`/users${id}`);
 
-    dispatch({ type: 'FETCH_USER', payload: response.data });
-})
+
+
+
+
+
+
+// export const fetchUser = id => dispatch => {
+//     _fetchUser(id, dispatch);
+// };
+// this method will only allow you to get one user 
+// if it updated and you wanted to call it again this method wouldnt let you 
+// const _fetchUser = _.memoize(async (id, dispatch) => {
+//     const response = await jsonPlaceholder.get(`/users${id}`);
+
+//     dispatch({ type: 'FETCH_USER', payload: response.data });
+// });
