@@ -10,7 +10,8 @@ class UserHeader extends React.Component {
         this.props.fetchUser(this.props.userId); // call the action creator
     }
     render() {
-        const user = this.props.users.find((user) => user.id === this.props.userId);
+        const { user } = this.props;
+
         if(!user) {
             return null;
         }
@@ -19,9 +20,11 @@ class UserHeader extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+// ownProps is a copy of the props that are passed in by the parent component
+const mapStateToProps = (state, ownProps) => {
     // will return an array of all the users from redux combined reducers (from the )
-    return { users: state.users }; // this is the data 
+    return { user: state.users.find(user => user.id === ownProps.userId) }; // this is the data 
+    //
 }
 
 export default connect(

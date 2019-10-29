@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import jsonPlaceholder from '../apis/jsonPlaceholder';
 
 // step 4: action creator runs code to make an API request
@@ -8,10 +9,15 @@ export const fetchPosts = () => async dispatch => {
     // step 5: api responds with data
     const response = await jsonPlaceholder.get('/posts');
     // step 6: action creator returns an 'action' with the fetched data on the 'payload' property
-    dispatch({ type: 'FETCH_POSTS', payload: response.data }) 
+    dispatch({ type: 'FETCH_POSTS', payload: response.data }); 
 };
 
-export const fetchUser = (id) => async dispatch => {
-    const response = await jsonPlaceholder.get(`/users/${id}`);
-    dispatch({ type: 'FETCH_USER', payload: response.data })
-}
+export const fetchUser = id => dispatch => {
+    _fetchUser(id, dispatch);
+};
+
+const _fetchUser = _.memoize(async (id, dispatch) => {
+    const response = await jsonPlaceholder.get(`/users${id}`);
+
+    dispatch({ type: 'FETCH_USER', payload: response.data });
+})
